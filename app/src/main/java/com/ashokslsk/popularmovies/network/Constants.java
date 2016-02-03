@@ -9,6 +9,7 @@ public class Constants {
     public static final String MOVIE_BASE_URL = "http://api.themoviedb.org/3/discover/movie?";
     public static final String SORT_PARAM = "sort_by";
     public static final String API_PARAM = "api_key";
+    public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185/";
 
 
     public static final String TAG_SORT_ON_POPULARITY = "popularity.desc";    // the strings for API call

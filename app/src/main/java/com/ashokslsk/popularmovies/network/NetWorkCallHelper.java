@@ -20,6 +20,7 @@ public class NetWorkCallHelper {
     //Network setup
     HttpURLConnection urlConnection = null;
     BufferedReader reader = null;
+
     // Will contain the raw JSON response as a string.
     public String mMovieResponse = null;
 
@@ -28,7 +29,7 @@ public class NetWorkCallHelper {
 
     }
 
-    public String GetJsonResponse(String BASE_URL, String SORT_BY, String API_PARAM){
+    public String GetJsonResponse(String BASE_URL, String SORT_BY){
         //Network Call
         try {
             // Construct the URL for the OpenWeatherMap query
@@ -38,8 +39,8 @@ public class NetWorkCallHelper {
 
             Uri builtUri = Uri.parse(BASE_URL)
                     .buildUpon()
-                    .appendQueryParameter(SORT_BY, "")
-                    .appendQueryParameter(API_PARAM, BuildConfig.MOVIE_DB_API_KEY)
+                    .appendQueryParameter(Constants.SORT_PARAM, "popularity.desc")
+                    .appendQueryParameter(Constants.API_PARAM, BuildConfig.MOVIE_DB_API_KEY)
                     .build();
 
             URL url = new URL(builtUri.toString());
