@@ -20,7 +20,7 @@ android {
 
 
     buildTypes.each {
-        it.buildConfigField 'String', 'MOVIE_DB_API_KEY', '"a39a4e9dc7273a828c455c92e5ddcfac"'
+        it.buildConfigField 'String', 'MOVIE_DB_API_KEY', '"YOUR API KEY GOES HERE"'
     }
 }
 
