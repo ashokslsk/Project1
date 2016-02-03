@@ -17,4 +17,10 @@ public class Constants {
     public static final String TAG_POSTER_PATH = "poster_path";
     public static final String MOVIE_ARRAY_KEY = "movieArray";
     public static final String POSTER_PATHS_KEY = "posterPaths";
+
+
+    public static final String TAG_ORIGINAL_TITLE = "original_title";
+    public static final String TAG_RATINGS = "vote_average";
+    public static final String TAG_RELEASE_DATE = "release_date";
+    public static final String TAG_SYNOPSIS = "overview";
 }

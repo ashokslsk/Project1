@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/thumbnail"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
+        android:layout_width="@dimen/Imageview_width"
+        android:layout_height="@dimen/Imageview_height"
         android:scaleType="fitXY" />
 
 </RelativeLayout>

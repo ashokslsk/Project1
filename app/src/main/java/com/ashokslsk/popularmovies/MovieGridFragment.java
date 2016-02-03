@@ -2,9 +2,12 @@ package com.ashokslsk.popularmovies;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -44,11 +47,18 @@ public class MovieGridFragment extends Fragment {
     RecyclerView mMovieGrid;
     private GridLayoutManager mGridLayoutManagerVertical;
 
+    public MovieGridFragment() {
+
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.movie_fragment, container, false);
+        setHasOptionsMenu(true);
+
+
         mMovieGrid = (RecyclerView) rootView.findViewById(R.id.movie_grid);
         mGridLayoutManagerVertical =
                 new GridLayoutManager(getActivity(),
@@ -57,20 +67,23 @@ public class MovieGridFragment extends Fragment {
                         false);
         mMovieGrid.setLayoutManager(mGridLayoutManagerVertical);
 
-        return rootView;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (isNetworkConnected() == false) {
-
-            Toast.makeText(getActivity(),"No network please turn ON internet",Toast.LENGTH_SHORT).show();
-
-        } else {
-            new GetMoviesAsyncTask().execute();
+        if (thumbnailPath != null) {
+            mMovieGrid.setAdapter(new MovieAdapter(getActivity(), thumbnailPath, movieArrayStr));
         }
+
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mMovieGrid.setLayoutManager(new GridLayoutManager(getActivity(),
+                    2, //The number of Columns in the grid
+                    LinearLayoutManager.VERTICAL,
+                    false));
+        } else {
+            mMovieGrid.setLayoutManager(new GridLayoutManager(getActivity(),
+                    4, //The number of Columns in the grid
+                    LinearLayoutManager.VERTICAL,
+                    false));
+        }
+
+        return rootView;
     }
 
 
@@ -79,9 +92,33 @@ public class MovieGridFragment extends Fragment {
         return cm.getActiveNetworkInfo() != null;
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate() called with: " + "savedInstanceState = [" + savedInstanceState + "]");
+
+        if (savedInstanceState != null) {
+            // Saved data
+            movieArrayStr = savedInstanceState.getStringArrayList("movieArray");
+            thumbnailPath = savedInstanceState.getStringArrayList("posterPaths");
+        } else {
+
+            if (isNetworkConnected() == false) {
+                // no internet connection
+                // generate a toast asking the user to connect to internet first
+                Toast.makeText(getActivity(), "Not connected to the Internet", Toast.LENGTH_LONG).show();
+            } else {
+                new GetMoviesAsyncTask().execute();
+            }
+        }
+    }
+
+
     public class GetMoviesAsyncTask extends AsyncTask<Void, Void, JSONArray> {
 
         private ProgressDialog dialog = new ProgressDialog(getActivity());
+        String sortingOrder = null;
 
 
         @Override
@@ -93,10 +130,24 @@ public class MovieGridFragment extends Fragment {
 
         @Override
         protected JSONArray doInBackground(Void... params) {
+
+            // find the sorting parameter
+            // get user's preferred units setting
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String sortingOrderPref = sharedPref.getString(getResources().getString(R.string.sort_order_key),
+                    getResources().getString(R.string.sort_order_default));
+            if (sortingOrderPref.equals(getResources().getString(R.string.sort_order_rating))) {
+                sortingOrder = Constants.TAG_SORT_ON_RATINGS;
+            } else {
+                sortingOrder = Constants.TAG_SORT_ON_POPULARITY;
+            }
+
+
             NetWorkCallHelper movieNetWorkRequest = new NetWorkCallHelper();
             // Making a request to url and getting response
-            String jsonStr = movieNetWorkRequest.GetJsonResponse(Constants.MOVIE_BASE_URL, "sort_by");
+            String jsonStr = movieNetWorkRequest.GetJsonResponse(Constants.MOVIE_BASE_URL, sortingOrder);
             Log.d(TAG, "doInBackground: " + jsonStr);
+
 
             try {
                 getMovieDataFromJSON(jsonStr);
@@ -145,7 +196,23 @@ public class MovieGridFragment extends Fragment {
                     return;
                 }
             }
-            mMovieGrid.setAdapter(new MovieAdapter(getActivity(), thumbnailPath));
+            if (thumbnailPath != null) {
+                mMovieGrid.setAdapter(new MovieAdapter(getActivity(), thumbnailPath, movieArrayStr));
+            }
         }
+
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        // save the two main required arrays
+        outState.putStringArrayList(Constants.MOVIE_ARRAY_KEY, movieArrayStr);
+        outState.putStringArrayList(Constants.POSTER_PATHS_KEY, thumbnailPath);
+        Log.d(TAG, "onSaveInstanceState() called with: " + "outState = [" + outState.toString() + "]");
+
+        // always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(outState);
+    }
+
 }

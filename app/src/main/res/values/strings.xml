@@ -1,4 +1,25 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string name="action_settings">Settings</string>
+    <string name="image_poster">Thumbnail</string>
+
+
+
+    <string name="pref_header_general">My Preferences</string>
+
+    <string name="pref_title_sort_order">Sort Order</string>
+    <string name="sort_order_key">sort_order</string>
+    <string name="sort_order_rating">pref_order_rating</string>
+    <string name="sort_order_popularity">pref_order_popularity</string>
+    <string name="sort_order_default">pref_order_popularity</string>
+
+    <string-array name="sort_order_titles">
+        <item>Most Popular</item>
+        <item>Highest Rated</item>
+    </string-array>
+    <string-array name="sort_order_values">
+        <item>@string/sort_order_popularity</item>
+        <item>@string/sort_order_rating</item>
+    </string-array>
+
 </resources>

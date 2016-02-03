@@ -9,13 +9,17 @@ import com.ashokslsk.popularmovies.R;
 /**
  * Created by ashok.kumar on 03/02/16.
  */
-public class MovieViewHolder extends RecyclerView.ViewHolder {
+public class MovieViewHolder extends RecyclerView.ViewHolder{
 
     public ImageView mMovieThumbnail;
+
+    private static final String TAG = "MovieViewHolder";
 
 
     public MovieViewHolder(View itemView) {
         super(itemView);
         this.mMovieThumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
     }
+
+
 }

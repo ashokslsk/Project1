@@ -39,7 +39,7 @@ public class NetWorkCallHelper {
 
             Uri builtUri = Uri.parse(BASE_URL)
                     .buildUpon()
-                    .appendQueryParameter(Constants.SORT_PARAM, "popularity.desc")
+                    .appendQueryParameter(Constants.SORT_PARAM, SORT_BY)
                     .appendQueryParameter(Constants.API_PARAM, BuildConfig.MOVIE_DB_API_KEY)
                     .build();
 
