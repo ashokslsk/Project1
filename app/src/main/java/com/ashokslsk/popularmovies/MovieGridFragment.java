@@ -29,6 +29,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by ashok.kumar on 03/02/16.
  */
@@ -44,8 +47,10 @@ public class MovieGridFragment extends Fragment {
     //Thumbnail path
     ArrayList<String> thumbnailPath = null;
 
-    RecyclerView mMovieGrid;
     private GridLayoutManager mGridLayoutManagerVertical;
+
+    @Bind(R.id.movie_grid)
+    RecyclerView mMovieGrid;
 
     public MovieGridFragment() {
 
@@ -59,7 +64,7 @@ public class MovieGridFragment extends Fragment {
         setHasOptionsMenu(true);
 
 
-        mMovieGrid = (RecyclerView) rootView.findViewById(R.id.movie_grid);
+        ButterKnife.bind(this, rootView);
         mGridLayoutManagerVertical =
                 new GridLayoutManager(getActivity(),
                         2, //The number of Columns in the grid
