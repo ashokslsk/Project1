@@ -1,4 +1,4 @@
-package com.ashokslsk.popularmovies;
+package com.ashokslsk.popularmovies.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ashokslsk.popularmovies.R;
 import com.ashokslsk.popularmovies.adapter.MovieAdapter;
 import com.ashokslsk.popularmovies.network.Constants;
 import com.ashokslsk.popularmovies.network.NetWorkCallHelper;
@@ -28,9 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by ashok.kumar on 03/02/16.
@@ -47,10 +45,8 @@ public class MovieGridFragment extends Fragment {
     //Thumbnail path
     ArrayList<String> thumbnailPath = null;
 
-    private GridLayoutManager mGridLayoutManagerVertical;
-
-    @Bind(R.id.movie_grid)
     RecyclerView mMovieGrid;
+    private GridLayoutManager mGridLayoutManagerVertical;
 
     public MovieGridFragment() {
 
@@ -64,7 +60,7 @@ public class MovieGridFragment extends Fragment {
         setHasOptionsMenu(true);
 
 
-        ButterKnife.bind(this, rootView);
+        mMovieGrid = (RecyclerView) rootView.findViewById(R.id.movie_grid);
         mGridLayoutManagerVertical =
                 new GridLayoutManager(getActivity(),
                         2, //The number of Columns in the grid

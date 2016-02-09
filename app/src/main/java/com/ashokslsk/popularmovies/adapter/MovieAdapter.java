@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ashokslsk.popularmovies.MovieDetails;
+import com.ashokslsk.popularmovies.activities.MovieDetails;
 import com.ashokslsk.popularmovies.R;
 import com.ashokslsk.popularmovies.network.Constants;
 import com.squareup.picasso.Picasso;

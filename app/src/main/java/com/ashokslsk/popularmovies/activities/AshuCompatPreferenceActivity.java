@@ -1,4 +1,4 @@
-package com.ashokslsk.popularmovies;
+package com.ashokslsk.popularmovies.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

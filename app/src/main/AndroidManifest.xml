@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,20 +21,20 @@
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
-            android:name=".MovieDetails">
+            android:parentActivityName=".activities.MainActivity"
+            android:name=".activities.MovieDetails">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ashokslsk.popularmovies.MainActivity" />
+                android:value=".activities.MainActivity" />
         </activity>
 
         <activity
-            android:parentActivityName=".MainActivity"
-            android:name=".SettingsActivity">
+            android:parentActivityName=".activities.MainActivity"
+            android:name=".activities.SettingsActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ashokslsk.popularmovies.SettingsActivity"/>
+                android:value=".activities.SettingsActivity"/>
 
         </activity>
 

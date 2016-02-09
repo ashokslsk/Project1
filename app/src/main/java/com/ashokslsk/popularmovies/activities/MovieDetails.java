@@ -1,7 +1,10 @@
-package com.ashokslsk.popularmovies;
+package com.ashokslsk.popularmovies.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.ashokslsk.popularmovies.fragments.MovieDetailFragment;
+import com.ashokslsk.popularmovies.R;
 
 public class MovieDetails extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.ashokslsk.popularmovies;
+package com.ashokslsk.popularmovies.fragments;
 
 
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ashokslsk.popularmovies.R;
 import com.ashokslsk.popularmovies.network.Constants;
 import com.squareup.picasso.Picasso;
 

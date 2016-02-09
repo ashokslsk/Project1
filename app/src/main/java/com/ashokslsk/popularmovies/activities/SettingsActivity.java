@@ -1,4 +1,4 @@
-package com.ashokslsk.popularmovies;
+package com.ashokslsk.popularmovies.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+
+import com.ashokslsk.popularmovies.R;
 
 import java.util.List;
 
