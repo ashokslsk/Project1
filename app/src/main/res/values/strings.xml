@@ -6,12 +6,23 @@
 
 
     <string name="pref_header_general">My Preferences</string>
-
+    <string name="menu_popular_movies">Popular Movies</string>
+    <string name="menu_toprated_movies">Top Rated Movies</string>
+    <string name="menu_favourites_movies">Favourite Movies</string>
     <string name="pref_title_sort_order">Sort Order</string>
     <string name="sort_order_key">sort_order</string>
     <string name="sort_order_rating">pref_order_rating</string>
     <string name="sort_order_popularity">pref_order_popularity</string>
     <string name="sort_order_default">pref_order_popularity</string>
+    <string name="retry">Try Again</string>
+    <string name="NoFavorite">No Favourites yet</string>
+    <string name="text_no_internet">No Internet</string>
+    <string name="text_default_error">Try Again</string>
+    <string name="text_ratings">Ratings</string>
+    <string name="text_trailers">Trailers</string>
+    <string name="text_reviews">Reviews</string>
+    <string name="share_content1">Hi Check this trailer</string>
+    <string name="youtube">Youtube</string>
 
     <string-array name="sort_order_titles">
         <item>Most Popular</item>

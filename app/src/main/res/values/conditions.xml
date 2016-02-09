@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <bool name="anim_backdrop_animate_alpha">true</bool>
+
+</resources>

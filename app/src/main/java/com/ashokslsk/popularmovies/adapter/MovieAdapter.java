@@ -1,74 +1,83 @@
 package com.ashokslsk.popularmovies.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.ashokslsk.popularmovies.activities.MovieDetails;
 import com.ashokslsk.popularmovies.R;
+import com.ashokslsk.popularmovies.model.Movie;
 import com.ashokslsk.popularmovies.network.Constants;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ashok.kumar on 03/02/16.
  */
-public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder>{
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder>{
 
-    private static final String TAG = "MovieAdapter";
+    Context context = null;
+    List<Movie> movies = null;
+    int actualPosterViewWidth =0;
+    private MovieClickInterface movieClickInterface;
+    private static final double TMDB_POSTER_SIZE_RATIO = 2/3;
 
-    private Context mContext;
-    private ArrayList<String> mThumbNailPath;  // this array will contain the paths to posters
-    ArrayList<String> movieArrayStr;
+    public MovieAdapter(Context context, List<Movie> movies, int actualPosterViewWidth, MovieClickInterface movieClickInterface)
+    {
+        this.context = context;
+        this.movies = movies;
+        this.actualPosterViewWidth = actualPosterViewWidth;
+        this.movieClickInterface = movieClickInterface;
+    }
+    @Override
+    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.each_movie_item, parent, false);
+        // set the view's size, margins, paddings and layout parameters
 
-
-    public MovieAdapter(Context mContext, ArrayList<String> mThumbNailPath, ArrayList<String> movieArrayStr) {
-        this.mContext = mContext;
-        this.mThumbNailPath = mThumbNailPath;
-        this.movieArrayStr = movieArrayStr;
+        return new MovieViewHolder(v);
     }
 
     @Override
-    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.each_movie_item, null);
-
-        MovieViewHolder viewHolder = new MovieViewHolder(view);
-
-
-        return viewHolder;
-    }
-
-
-
-    @Override
-    public void onBindViewHolder(MovieViewHolder holder, final int position) {
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String movieDetails = movieArrayStr.get(position);    // get the corresponding movie details from the array
-                Log.d(TAG, "onClick() " + movieDetails);
-
-                Intent movieDetailsIntent = new Intent(mContext, MovieDetails.class);
-                movieDetailsIntent.putExtra(Intent.EXTRA_TEXT, movieDetails);
-                mContext.startActivity(movieDetailsIntent);
-            }
-        });
-
+    public void onBindViewHolder(final MovieViewHolder holder, final int position) {
         //Download image using picasso library
-        Picasso.with(mContext).load(Constants.IMAGE_BASE_URL+ mThumbNailPath.get(position))
+        Picasso.with(context).load(Constants.IMAGE_BASE_URL+ movies.get(position).getPosterPath())
                 .error(R.drawable.ic_placeholder)
                 .placeholder(R.drawable.ic_placeholder)
                 .into(holder.mMovieThumbnail);
+
+        holder.mMovieThumbnail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movieClickInterface.onMovieClick(holder.itemView,movies.get(position),false);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return (null != mThumbNailPath ? mThumbNailPath.size() : 0);
+        return movies.size();
     }
+
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mMovieThumbnail;
+
+        public MovieViewHolder(View itemView)
+        {
+            super(itemView);
+            mMovieThumbnail = (ImageView) itemView.findViewById(R.id.thumbnail);
+
+        }
+
+    }
+
+    public interface MovieClickInterface
+    {
+        void onMovieClick(View itemView,Movie movie,boolean isDefaultSelection);
+    }
+
+
 }
