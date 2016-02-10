@@ -12,46 +12,48 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".activities.MainActivity">
+            android:name=".activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".activities.BaseActivity" />
-
         <activity
-            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".activities.MovieDetails"
             android:parentActivityName=".activities.MainActivity"
-            android:name=".activities.MovieDetails">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ashokslsk.popularmovies.activities.BaseActivity" />
         </activity>
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.SettingsActivity" />
+        </activity>
+
+        <provider
+            android:name=".provider.MovieProvider"
+            android:authorities="com.ashokslsk.popularmovies.provider"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity
-            android:parentActivityName=".activities.MainActivity"
-            android:name=".activities.SettingsActivity">
+            android:name=".activities.PlayerActivity"
+            android:parentActivityName=".activities.MovieDetails"
+            android:theme="@android:style/Theme.Dialog">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.SettingsActivity"/>
+                android:value=".activities.MovieDetails" />
 
         </activity>
-
-
-        <provider
-            android:authorities="com.ashokslsk.popularmovies"
-            android:name=".provider.MovieProvider"
-            android:enabled="true"
-            android:exported="true"/>
-
     </application>
 
 </manifest>

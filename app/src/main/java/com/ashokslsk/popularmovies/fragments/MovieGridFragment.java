@@ -26,7 +26,7 @@ import com.ashokslsk.popularmovies.model.MoviesResponse;
 import com.ashokslsk.popularmovies.model.SortCriteria;
 import com.ashokslsk.popularmovies.network.MovieNetworkService;
 import com.ashokslsk.popularmovies.util.EndlessRecyclerOnScrollListener;
-import com.ashokslsk.popularmovies.util.RxUtils;
+import com.ashokslsk.popularmovies.util.RxJavaUtils;
 import com.ashokslsk.popularmovies.util.Utils;
 
 import java.util.ArrayList;
@@ -192,14 +192,14 @@ public class MovieGridFragment extends Fragment implements MovieAdapter.MovieCli
     @Override
     public void onResume() {
         super.onResume();
-        _subscriptions = RxUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
+        _subscriptions = RxJavaUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        RxUtils.unsubscribeIfNotNull(_subscriptions);
+        RxJavaUtils.unsubscribeIfNotNull(_subscriptions);
     }
 
     @Override

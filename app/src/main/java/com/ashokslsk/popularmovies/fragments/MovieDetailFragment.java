@@ -3,7 +3,6 @@ package com.ashokslsk.popularmovies.fragments;
 
 import android.animation.Animator;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -29,6 +28,7 @@ import android.widget.TextView;
 
 import com.ashokslsk.popularmovies.BuildConfig;
 import com.ashokslsk.popularmovies.R;
+import com.ashokslsk.popularmovies.activities.PlayerActivity;
 import com.ashokslsk.popularmovies.model.Movie;
 import com.ashokslsk.popularmovies.model.Review;
 import com.ashokslsk.popularmovies.model.ReviewsResponse;
@@ -36,7 +36,7 @@ import com.ashokslsk.popularmovies.model.Trailer;
 import com.ashokslsk.popularmovies.model.TrailersResponse;
 import com.ashokslsk.popularmovies.network.Constants;
 import com.ashokslsk.popularmovies.network.MovieNetworkService;
-import com.ashokslsk.popularmovies.util.RxUtils;
+import com.ashokslsk.popularmovies.util.RxJavaUtils;
 import com.ashokslsk.popularmovies.util.Utils;
 import com.squareup.picasso.Picasso;
 
@@ -58,7 +58,7 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by ashok.kumar on 03/02/16.
  */
-public class MovieDetailFragment extends Fragment implements View.OnClickListener {
+public class MovieDetailFragment  extends Fragment implements View.OnClickListener {
 
     private static final String ARG_MOVIE = "movie";
     private static final String ARG_TWO_PANE ="twoPane";
@@ -95,10 +95,9 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
     @OnClick(R.id.btn_share)
     public void btnShareClicked()
     {
-        String content = getResources().getString(R.string.share_content1).concat(movie.getTitle()).concat(getResources().getString(R.string.share_content1)).concat(MovieNetworkService.getUrl(getActivity(), trailersResponse.getTrailers().get(0)));
-        Utils.shareUsingApps(getActivity(), getResources().getString(R.string.app_name), content);
+        String content = getResources().getString(R.string.share_content1).concat(movie.getTitle()).concat(getResources().getString(R.string.share_content1)).concat(MovieNetworkService.getUrl(getActivity(),trailersResponse.getTrailers().get(0)));
+        Utils.shareUsingApps(getActivity(),getResources().getString(R.string.app_name), content);
     }
-
 
     @Bind(R.id.fab_fav)
     FloatingActionButton fabFavourite;
@@ -122,7 +121,6 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
     private boolean mInitialMovieLoaded = false;
     private CompositeSubscription _subscriptions = new CompositeSubscription();
     private boolean isReviewRequestComplete=false,isTrailerRequestComplete=false;
-
     public MovieDetailFragment() {
         // Required empty public constructor
     }
@@ -150,7 +148,7 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = (ViewGroup) inflater.inflate(R.layout.content_detail_main, container, false);
-        ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this,rootView);
         return rootView;
     }
 
@@ -159,7 +157,7 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
         super.onActivityCreated(savedInstanceState);
         if(savedInstanceState!=null)
         {
-            Log.d("savedInstance", "fetching values");
+            Log.d("savedInstance","fetching values");
             movie = savedInstanceState.getParcelable(ARG_MOVIE);
             trailersResponse = savedInstanceState.getParcelable(ARG_TRAILER);
             reviewsResponse = savedInstanceState.getParcelable(ARG_REVIEW);
@@ -191,7 +189,7 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
 
                             @Override
                             public void onError(Throwable e) {
-                                if (!Utils.isConnectedToInternet(getActivity()))
+                                if(!Utils.isConnectedToInternet(getActivity()))
                                     showSnackbar(getResources().getString(R.string.text_no_internet));
                                 else
                                     showSnackbar(getResources().getString(R.string.text_default_error));
@@ -201,7 +199,8 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
                             public void onNext(TrailersResponse trailersResponse) {
                                 isTrailerRequestComplete = true;
                                 handleTrailers(trailersResponse);
-                                if (isReviewRequestComplete) {
+                                if(isReviewRequestComplete)
+                                {
                                     progressBar.setVisibility(View.GONE);
                                 }
                             }
@@ -313,8 +312,6 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
     }
 
     private void updateMovieDetails() {
-
-
         if (anibackdropAnimateAlpha) {
             backdrop.setAlpha(0f); // wait for enter animation
         }
@@ -323,12 +320,10 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
             int backdropWidth = backdrop.getWidth();   // this will be correct because this function is
             // only called after layout is complete
             int backdropHeight = getResources().getDimensionPixelSize(R.dimen.details_backdrop_height);
-
             Picasso.with(getActivity()).load(Constants.IMAGE_BASE_URL + movie.getBackdropPath())
                     .error(R.drawable.ic_placeholder)
                     .placeholder(R.drawable.ic_placeholder)
                     .into(backdrop);
-
 
         }
         poster.setTranslationY(0);
@@ -337,8 +332,7 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
         Picasso.with(getActivity()).load(Constants.IMAGE_BASE_URL + movie.getBackdropPath())
                 .error(R.drawable.ic_placeholder)
                 .placeholder(R.drawable.ic_placeholder)
-                .into(backdrop);
-
+                .into(poster);
 
         title.setText(movie.getTitle());
 
@@ -354,13 +348,19 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
         LayoutInflater inflater = getActivity().getLayoutInflater();
         int posterWidth = getResources().getDimensionPixelSize(R.dimen.video_width);
         int posterHeight = getResources().getDimensionPixelSize(R.dimen.video_height);
-        for (Trailer trailer : trailers) {
+        for (final Trailer trailer : trailers) {
             final ViewGroup thumbContainer = (ViewGroup) inflater.inflate(R.layout.video, trailersView,
                     false);
             final ImageView thumbView = (ImageView) thumbContainer.findViewById(R.id.video_thumb);
-
-            thumbView.setTag(MovieNetworkService.getUrl(getActivity(),trailer));
-
+            thumbView.setTag(MovieNetworkService.getUrl(getActivity(), trailer));
+            thumbView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent youtube = new Intent(getActivity(), PlayerActivity.class);
+                    youtube.putExtra("video_id",trailer.getKey());
+                    startActivity(youtube);
+                }
+            });
             Picasso.with(getActivity()).load(MovieNetworkService.getThumbnailUrl(getActivity(),trailer))
                     .error(R.drawable.ic_placeholder)
                     .placeholder(R.drawable.ic_placeholder)
@@ -448,13 +448,13 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fake_view && movie != null) {
-
-        } else if (v.getId() == R.id.video_thumb) {
-            String videoUrl = (String) v.getTag();
-            Intent playVideoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl));
-            startActivity(playVideoIntent);
-        }
+//        if (v.getId() == R.id.fake_view && movie != null) {
+//
+//        } else if (v.getId() == R.id.video_thumb) {
+//            String videoUrl = (String) v.getTag();
+//            Intent playVideoIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl));
+//            startActivity(playVideoIntent);
+//        }
 
 
     }
@@ -484,14 +484,14 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        _subscriptions = RxUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
+        _subscriptions = RxJavaUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        RxUtils.unsubscribeIfNotNull(_subscriptions);
+        RxJavaUtils.unsubscribeIfNotNull(_subscriptions);
     }
 
     public TrailersResponse getTrailersResponse() {
@@ -535,7 +535,7 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
     public void showSnackbar(String text)
     {
         progressBar.setVisibility(View.GONE);
-        Snackbar.make(rootView, text, Snackbar.LENGTH_LONG)
+        Snackbar.make(rootView,text, Snackbar.LENGTH_LONG)
                 .setAction(getResources().getString(R.string.retry), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -547,4 +547,3 @@ public class MovieDetailFragment extends Fragment implements View.OnClickListene
                 }).show();
     }
 }
-

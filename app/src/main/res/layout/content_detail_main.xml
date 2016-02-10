@@ -1,10 +1,10 @@
 <android.support.v4.widget.NestedScrollView
-    android:id="@+id/scroll_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/scroll_view_layout"
@@ -17,27 +17,26 @@
             android:id="@+id/backdrop"
             android:layout_width="match_parent"
             android:layout_height="@dimen/details_backdrop_height"
-            android:visibility="visible"
             android:scaleType="centerCrop"
-            />
+            android:visibility="visible" />
+
         <View
+            android:id="@+id/fake_view"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:id="@+id/fake_view"
-            android:visibility="visible"
-            android:layout_alignBottom="@+id/backdrop"/>
+            android:layout_alignBottom="@+id/backdrop"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/poster"
             android:layout_width="@dimen/details_poster_width"
             android:layout_height="@dimen/details_poster_height"
+            android:layout_below="@+id/fake_view"
             android:layout_marginLeft="@dimen/margin_large"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_negative"
-            android:layout_below="@+id/fake_view"
-            tools:background="@drawable/ic_placeholder"
             android:transitionName="poster"
-            />
+            tools:background="@drawable/ic_placeholder" />
 
         <TextView
             android:id="@+id/title"
@@ -50,13 +49,12 @@
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_default"
             android:layout_toEndOf="@id/poster"
-            android:layout_toRightOf="@id/poster"
             android:layout_toLeftOf="@+id/fab_fav"
+            android:layout_toRightOf="@id/poster"
             android:ellipsize="end"
             android:maxLines="2"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            tools:text="The Hunger Games: Mockingjay - Part 2"
-            />
+            tools:text="The Hunger Games: Mockingjay - Part 2" />
 
         <TextView
             android:id="@+id/release_date"
@@ -70,8 +68,7 @@
             android:layout_toEndOf="@id/poster"
             android:layout_toRightOf="@id/poster"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            tools:text="2015"
-            />
+            tools:text="2015" />
 
         <LinearLayout
             android:id="@+id/rating_container"
@@ -92,8 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-                android:textColor="?android:attr/textColorPrimary"
-                />
+                android:textColor="?android:attr/textColorPrimary" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,8 +97,7 @@
                 android:layout_marginTop="@dimen/margin_default"
                 android:text="@string/text_ratings"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="?android:attr/textColorSecondary"
-                />
+                android:textColor="?android:attr/textColorSecondary" />
 
         </LinearLayout>
 
@@ -118,16 +113,16 @@
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_large"
             android:lineSpacingMultiplier="@dimen/line_spacing"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
         <LinearLayout
+            android:id="@+id/trailers_header_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/synopsis"
             android:orientation="horizontal"
-            android:id="@+id/trailers_header_container"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/trailers_header"
                 android:layout_width="wrap_content"
@@ -137,30 +132,31 @@
                 android:layout_marginRight="@dimen/margin_large"
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_default"
+                android:gravity="center|center_vertical"
                 android:paddingTop="@dimen/margin_large"
                 android:text="@string/text_trailers"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:gravity="center|center_vertical"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
             <ImageButton
+                android:id="@+id/btn_share"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:background="@android:color/transparent"
-                android:src="@android:drawable/ic_menu_share"
-                android:id="@+id/btn_share"
                 android:paddingTop="@dimen/margin_large"
-                android:layout_gravity="center"/>
+                android:src="@android:drawable/ic_menu_share" />
         </LinearLayout>
+
         <HorizontalScrollView
             android:id="@+id/trailers_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/trailers_header_container"
-            android:layout_marginTop="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginLeft="@dimen/margin_large"
             android:layout_marginRight="@dimen/margin_large"
             android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_large"
             android:clipChildren="false"
             android:visibility="gone"
             tools:ignore="RtlHardcoded,RtlSymmetry">
@@ -171,8 +167,7 @@
                 android:layout_height="wrap_content"
                 android:clipChildren="false"
                 android:orientation="horizontal"
-                android:showDividers="middle"
-                />
+                android:showDividers="middle" />
 
         </HorizontalScrollView>
 
@@ -189,8 +184,7 @@
             android:paddingTop="@dimen/margin_large"
             android:text="@string/text_reviews"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/reviews"
@@ -200,26 +194,25 @@
             android:layout_marginTop="@dimen/margin_default"
             android:clipChildren="false"
             android:orientation="vertical"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 
         <android.support.design.widget.FloatingActionButton
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:src="@android:drawable/star_off"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:clickable="true"
             android:id="@+id/fab_fav"
-            android:layout_below="@+id/fake_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/margin_negative"/>
+            android:layout_below="@+id/fake_view"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginTop="@dimen/margin_negative"
+            android:clickable="true"
+            android:src="@android:drawable/star_off" />
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

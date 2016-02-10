@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_movies);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mMoviesFragment = (MovieGridFragment) getSupportFragmentManager().findFragmentById(R.id.movies_fragment);
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     public void showDetailsFragment()
     {
-        if(findViewById(R.id.details_fragment_container) != null && findViewById(R.id.details_fragment_container).getVisibility()== View.GONE)
+        if(findViewById(R.id.details_fragment_container) != null && findViewById(R.id.details_fragment_container).getVisibility()==View.GONE)
             findViewById(R.id.details_fragment_container).setVisibility(View.VISIBLE);
     }
     public void hideDetailsFragment()

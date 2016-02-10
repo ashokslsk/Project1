@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class MovieProvider  extends ContentProvider {
 
     //fields for content provider
-    public static final String PROVIDER_NAME = "com.nanodegree.popularmovies.provider";
+    public static final String PROVIDER_NAME = "com.ashokslsk.popularmovies.provider";
     public static final String URL = "content://" + PROVIDER_NAME + "/movies";
     public static final Uri CONTENT_URI = Uri.parse(URL);
 

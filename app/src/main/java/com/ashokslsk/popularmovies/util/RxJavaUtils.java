@@ -7,7 +7,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by ashok.kumar on 09/02/16.
  */
 
-public class RxUtils {
+public class RxJavaUtils {
 
     public static void unsubscribeIfNotNull(Subscription subscription) {
         if (subscription != null) {

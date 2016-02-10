@@ -4,7 +4,6 @@
     <string name="image_poster">Thumbnail</string>
 
 
-
     <string name="pref_header_general">My Preferences</string>
     <string name="menu_popular_movies">Popular Movies</string>
     <string name="menu_toprated_movies">Top Rated Movies</string>
@@ -23,6 +22,7 @@
     <string name="text_reviews">Reviews</string>
     <string name="share_content1">Hi Check this trailer</string>
     <string name="youtube">Youtube</string>
+    <string name="error">Something went wrong</string>
 
     <string-array name="sort_order_titles">
         <item>Most Popular</item>

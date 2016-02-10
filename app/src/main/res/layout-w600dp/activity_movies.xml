@@ -36,7 +36,7 @@
 
         <fragment
             android:id="@+id/movies_fragment"
-            android:name="com.nanodegree.popularmovies.fragments.MoviesFragment"
+            android:name="com.ashokslsk.popularmovies.fragments.MovieGridFragment"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
@@ -44,7 +44,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:layout="@layout/fragment_movies"
+            tools:layout="@layout/movie_fragment"
             />
 
         <FrameLayout

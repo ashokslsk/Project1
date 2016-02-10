@@ -33,6 +33,7 @@ import java.util.List;
  * Created by ashok.kumar on 09/02/16.
  */
 public class Utils {
+    
     public static int getScreenWidth(@NonNull Context context) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -118,6 +119,7 @@ public class Utils {
                     int lineEndIndex = tv.getLayout().getLineEnd(0);
                     String text = tv.getText().subSequence(0, lineEndIndex - expandText.length() + 1) + " " + expandText;
                     tv.setText(text);
+                    tv.setTextIsSelectable(true);
                     tv.setMovementMethod(LinkMovementMethod.getInstance());
                     tv.setText(
                             addClickablePartTextViewResizable(Html.fromHtml(tv.getText().toString()), tv, maxLine, expandText,

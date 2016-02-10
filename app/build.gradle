@@ -21,6 +21,7 @@ android {
 
     buildTypes.each {
         it.buildConfigField 'String', 'MOVIE_DB_API_KEY', '"a39a4e9dc7273a828c455c92e5ddcfac"'
+        it.buildConfigField 'String', 'YOUTUBE_API_KEY', '"AIzaSyAW_icQTkRB0ZQLAlZrclhfYJ4MQsnY6QQ"'
     }
 }
 
@@ -42,6 +43,5 @@ dependencies {
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxjava-math:1.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-
-
+    compile files('libs/YouTubeAndroidPlayerApi.jar')
 }
